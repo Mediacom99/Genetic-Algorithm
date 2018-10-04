@@ -1,4 +1,4 @@
-package GeneticAlgorithm;
+package GeneticAlgorithm.GA;
 
 public class Population{
 	
@@ -9,17 +9,15 @@ public class Population{
 	 */
 	
 	//create Population
-	public Population(int popSize, boolean initialize) {
+	public Population(int popSize) {
+		
 		element = new Element[popSize];
-		//initialize population (used to not recreate random elements pieces
-		if(initialize) {
-			//loop to create the element 
-			for(int i = 0; i< size(); i++){
-				Element newElement = new Element();
-				newElement.generateElement();
-				saveElement(i, newElement);
-			}
+		for(int i=0; i<popSize; i++) {
+			element[i] = new Element();
+			element[i].generateElement();
 		}
+		//System.out.println(element);
+	
 	}
 	
 	public Element getElement(int index){
