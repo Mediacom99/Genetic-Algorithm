@@ -1,37 +1,40 @@
-package GeneticAlgorithm;
+package GeneticAlgorithm.GA;
+
 
 import java.util.Scanner;
 
+
+
 public class GA {
 
-	static Scanner console = new Scanner(System.in);
-	
+	private static Scanner console = new Scanner(System.in);
+	private static String targetScanned = "";
 	public static void main(String[] args) {
-		GeneticAlgorithm();
+
+		//User data
+//		int populSize = console.nextInt();
+//		String wordToMake = console.nextLine();
+		// Create an initial Population
+		Population myPop1 = new Population(10);
+		
+		CompilerBF result = new CompilerBF();
+		//loop:
+		if(result.interpret(myPop1.getFittest().toStringGenesArray()).matches("Hello")) {
+			System.out.println(result.interpret(myPop1.getFittest().toStringGenesArray()));
+		}else{
+			Algorithm.evolvePopulation(myPop1);	
+			}
+			
+		
+		System.out.println(myPop1.getFittest().toStringGenesArray());
 		
 	}
 	
-	private static void GeneticAlgorithm(){
-				System.out.print("Type here the desired target solution: ");
-				String targetScanned = console.nextLine();
-				// Set the gene length as the target length (Comment this to have default 64 length)
-				Element.setDefaultGeneLength(targetScanned.length());
-				// Set the target
-				FitnessCalc.setTarget(targetScanned);		
-				// Create an initial Population
-				Population myPop1 = new Population(100, true);
-				
-				// Evolve our population until we reach an optimal solution
-				int generationCounter = 0;
-				while(myPop1.getFittest().getFitness() < FitnessCalc.getMaxFitness()){
-					generationCounter++;
-					System.out.println("Generation: "+generationCounter+" Fittest: "+myPop1.getFittest().getFitness());
-					myPop1 = Algorithm.evolvePopulation(myPop1);
-				}
-				System.out.println("Solution found!");
-				System.out.println("Generation: " + generationCounter);
-				System.out.println("Genes: ");
-				System.out.print(myPop1.getFittest());
+	
+	/* Getters */
+	public static String getTargetScanned(){
+		return targetScanned;
 	}
-
+	
+	
 }

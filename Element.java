@@ -1,10 +1,14 @@
-package GeneticAlgorithm;
+package GeneticAlgorithm.GA;
+
+import java.util.Random;
 
 //** Improving by using ArrayList **//
 public class Element {
 	
-	static int defaultGeneLength = 64;								//length of the gene
-	private byte[] genes = new byte[defaultGeneLength];				//array of genes which make a element
+	private static int defaultGeneLength = 50;								//length of the gene 
+	private char[] genes = new char[defaultGeneLength];				//array of genes which make an element
+	private Random rand = new Random();
+	private int score = 0;
 	
 	//Cache
 	private int fitness = 0;
@@ -12,28 +16,48 @@ public class Element {
 	//create a random element
 	public void generateElement(){
 		for(int i = 0; i<size(); i++){
-			byte gene = (byte)Math.round(Math.random());			//random number which can be either 0 or 1
-			genes[i] = gene;
+			int geneInt = rand.nextInt(7);							//random number between 0 and 8 (8 non inclusive)
+			genes[i] = translateIntChar(geneInt);
 		}
+	}
+
+	// Translate from number to character
+	private static char translateIntChar(int geneInt){
+		if(geneInt == 0){
+			return '>';						
+		} else if(geneInt == 1){
+			return '<';						
+		} else if(geneInt == 2){
+			return '+';						
+		} else if(geneInt == 3){
+			return '-';						
+		} else if(geneInt == 4){
+			return '.';						
+		} else if(geneInt == 5){
+			return '[';						
+		} else {
+			return ']';						
+		}
+		
 	}
 	
 	/*Gets and Sets*/
 	
-	//use this if you want to create elements with different gene lengths
-	public static void setDefaultGeneLength(int length){
-		defaultGeneLength = length;
-	}
 	
-	public byte getGene(int index){
+	
+	public char getGene(int index){
 		return genes[index];
 	}
 	
-	public void setGene(int index, byte value){
+	public void setGene(int index, char value){
 		genes[index] = value;
 		fitness = 0;
 	}
 	
-	/*Public methods*/
+	public int getScore(){
+		return this.score;
+	}
+	
 	
 	public int size(){
 		return genes.length;
@@ -46,12 +70,24 @@ public class Element {
 		return fitness;
 	}
 	
-	public String toString(){
+	public void printGenesArray(){
+		for(char x : genes){
+			System.out.print(x);
+		}
+	}
+	
+	public String toStringGenesArray(){
 		String geneString = "";
 		for(int i = 0; i < size(); i++){
 			geneString += getGene(i);
 		}
 		return geneString;
+	}
+	
+	public static char generateRandomGene(){
+		Random randy = new Random();
+		int geneInt = randy.nextInt(8);
+		return translateIntChar(geneInt);
 	}
 	
 	

@@ -1,10 +1,11 @@
-package GeneticAlgorithm;
+package GeneticAlgorithm.GA;
+
 
 public class Algorithm {
 
 	//GA parameters
 	private static final double uniformRate = 0.5;
-	private static final double mutationRate = 0.015;	//0.015
+	private static final double mutationRate = 0.015;					//0.015
 	private static final int tournamentSize = 5;
 	private static final boolean elitism = true;
 	
@@ -12,7 +13,7 @@ public class Algorithm {
 	
 	//Evolve a Population
 	public static Population evolvePopulation(Population pop){
-		Population newPopulation = new Population(pop.size(), false);
+		Population newPopulation = new Population(pop.size());
 		
 		//keep our best element
 		if(elitism){
@@ -64,7 +65,7 @@ public class Algorithm {
 		for(int i = 0; i<elem.size(); i++){
 			if(Math.random() <= mutationRate){
 				// Create a random gene
-				byte gene = (byte)Math.round(Math.random());
+				char gene = Element.generateRandomGene();
 				elem.setGene(i, gene);
 			}
 		}
@@ -73,7 +74,7 @@ public class Algorithm {
 	// Select two best elements for crossover
 	private static Element tournamentSelection(Population pop){
 		//create a tournament population
-		Population tournament = new Population(tournamentSize, false);
+		Population tournament = new Population(tournamentSize);
 		// For each place in the tournament get a random element
 		for(int i = 0; i<tournamentSize; i++){
 			int randomId = (int) (Math.random() * pop.size());
